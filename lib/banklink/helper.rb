@@ -2,12 +2,12 @@ module Banklink #:nodoc:
  class Helper
     attr_reader :fields
     include Banklink::Common
-   
+
     def initialize(order, account, options = {})
-    
+
       @options = options
       @fields = {}
-      
+
       @options['VK_SND_ID'] = account
       @options['VK_STAMP'] = order
       @options['VK_AMOUNT'] = options[:amount]
@@ -16,7 +16,7 @@ module Banklink #:nodoc:
       @options['VK_REF'] = options[:reference] || ""
       @options['VK_MSG'] = options[:message]
       @options['VK_LANG'] = options[:lang] if options[:lang]
-      
+
       if options[:service_msg_number]
         @service_msg_number = options.delete(:service_msg_number)
       else
@@ -29,12 +29,12 @@ module Banklink #:nodoc:
       add_return_url_field
       add_lang_field
     end
-    
-    
+
+
     def form_fields
       @fields
     end
-    
+
     def self.mapping(attribute, options = {})
       self.mappings ||= {}
       self.mappings[attribute] = options
@@ -49,11 +49,11 @@ module Banklink #:nodoc:
       # Signature used to validate previous parameters
       add_field('VK_MAC', generate_mac(@service_msg_number, form_fields))
     end
-    
+
     def add_return_url_field
       add_field('VK_RETURN', @options['VK_RETURN'])
     end
-    
+
     def add_lang_field
       if @options['VK_LANG']
         add_field(vk_lang_param, @options['VK_LANG'])
@@ -65,7 +65,7 @@ module Banklink #:nodoc:
     def add_charset_field
       add_field vk_charset_param, vk_charset
     end
- 
+
     def add_required_params
       required_params = Banklink.required_service_params[@service_msg_number]
       required_params.each do |param|
@@ -82,7 +82,7 @@ module Banklink #:nodoc:
     def vk_charset_param
       'VK_ENCODING'
     end
-    
+
     def vk_lang
       'LAT'
     end
@@ -108,10 +108,10 @@ module Banklink #:nodoc:
     private
     # Iconv converter to convert from utf8 to
     # the charset the bank api expects.
-    
+
     def encode_to_utf8 string
       string.encode('UTF-8', :invalid => :replace, :replace => '').encode('UTF-8')
     end
-    
+
   end
 end
