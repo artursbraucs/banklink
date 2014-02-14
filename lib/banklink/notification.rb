@@ -73,7 +73,7 @@ module Banklink
     end
 
     def transaction_id
-      params['VK_T_NO']
+      params['VK_REF']
     end
 
     def sender_name
