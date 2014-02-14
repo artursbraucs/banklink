@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary = "Banklink integration in your website without active merchant (Latvia)"
   s.require_path = "lib"
   s.has_rdoc = false
-  s.extra_rdoc_files = ["README"]
+  s.extra_rdoc_files = ["README.rdoc"]
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
