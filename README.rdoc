@@ -17,16 +17,16 @@ Not yet in RubyGems
 
 Insert this into your Gemfile
 
-  gem "banklink_lv", :git => 'git://github.com/CreativeMobile/Banklink-LV.git' 
+  gem "banklink_lv", git: "artursbraucs/banklink"
 
 === Configurations
 
 Insert this in your config file:
-  
+
   SwedbankLv.private_key = File.read("#{Rails.root}/path/to/your_private_key")
   SwedbankLv.bank_certificate = File.read("#{Rails.root}/path/to/bank_public_key")
   SwedbankLv.production_url = "https://ib.swedbank.lv/banklink"
-  
+
   SwedbankLv.test_private_key = File.read("#{Rails.root}/path/to/your_test_private_key")
   SwedbankLv.test_bank_certificate = File.read("#{Rails.root}/path/to/test_bank_public_key")
   SwedbankLv.test_url = "https://ib.swedbank.lv/banklink"
@@ -40,9 +40,9 @@ Helper for view:
     options[:reference] = '454'
     options[:message] = 'Testing banklink'
     @helper = Banklink::Helper.new(TRANS_ID, YOUR_SENDER_ID, options)
-    
+
 Then create Notification controller for notify. Then you can notify:
-  
+
     notify = Banklink::Notification.new(request.raw_post)
     @text
     if notify.acknowledge
@@ -56,9 +56,9 @@ Then create Notification controller for notify. Then you can notify:
     else
       @text = "Stmx went wrong"
     end
-    
+
 Thats all!
-  
+
 
 == Testing
 
@@ -68,4 +68,4 @@ You can run the tests from this gem with (inside the banklink_lv directory):
 
 == Maintainer
 
-This gem is maintained by {Arturs Braucs @ Creative Mobile}[mailto:arturs@creo.mobi]
+This gem is maintained by {Arturs Braucs @ Weby}[mailto:arturs@weby.lv]
