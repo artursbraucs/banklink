@@ -17,7 +17,6 @@ module Swedbank
 
   mattr_accessor :service_url
   def self.service_url
-    mode = Rails.env
     self.service_url
   end
 
