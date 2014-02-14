@@ -1,1 +1,0 @@
-require 'banklink_lv'

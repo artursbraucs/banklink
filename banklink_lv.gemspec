@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "banklink_lv/version"
+require "banklink/version"
 
 Gem::Specification.new do |s|
   s.name = "banklink_lv"
-  s.version = BanklinkLv::VERSION
+  s.version = Banklink::VERSION
   s.author = "Arturs Braucs"
   s.email = ["arturs@weby.lv"]
   s.homepage = "https://github.com/artursbraucs/banklink"

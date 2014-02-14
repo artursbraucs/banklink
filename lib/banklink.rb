@@ -1,6 +1,7 @@
-require 'banklink_lv/version'
+require 'banklink/version'
 
-require "rails"
+# require "rails"
+require "base64"
 require "active_support/dependencies"
 
 require 'net/http'
@@ -13,11 +14,11 @@ require 'openssl'
 
 require 'cgi'
 
-require 'banklink_lv/banklink'
-require 'banklink_lv/base'
-require 'banklink_lv/helper'
-require 'banklink_lv/swedbank'
-require 'banklink_lv/notification'
+require 'banklink/banklink'
+require 'banklink/base'
+require 'banklink/helper'
+require 'banklink/swedbank'
+require 'banklink/notification'
 
 %w{ models controllers helpers }.each do |dir|
   path = File.join(File.dirname(__FILE__), 'app', dir)

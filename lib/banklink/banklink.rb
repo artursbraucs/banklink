@@ -6,22 +6,22 @@ module Banklink
   #    when 'EYP' then SebEst
   #    when 'SAMPOPANK' then SampoEst
   #    when 'HP' then SwedbankEst
-  
+
     # Swedbank uses same sender id for different countries, currently can't detect Lithuanian
     # use:
-    #   notify = SwedbankLtu::Notification.new(params)
-    #when 'HP' then SwedbankLtu
-    
+    #   notify = Swedbank::Notification.new(params)
+    #when 'HP' then Swedbank
+
     #when '70440' then SebLtu
     #when 'SMPOLT22' then DanskeLtu
     #when 'SNORLT22' then SnorasLtu
     #when '112029720' then DnbnordLtu
-    #when '70100' then UbLtu            
-  
+    #when '70100' then UbLtu
+
   #    else raise(ArgumentError, "unknown sender id: #{params['VK_SND_ID']}")
   #  end
   #end
-  
+
   # Define required fields for each service message.
   # We need to know this in order to calculate VK_MAC
   # from a given hash of parameters.
@@ -87,7 +87,7 @@ module Banklink
     'VK_REF',
     'VK_MSG']
   }
-  
+
   # Calculation using method VK_VERSION=008:
   # VK_MAC is RSA signature of the request fields coded into BASE64.
   # VK_MAC will be calculated using secret key of the sender using RSA. Signature will
@@ -106,7 +106,7 @@ module Banklink
     def func_p(val)
       sprintf("%03i", val.length)
     end
-    
+
     # Generate a string to be signed out of service message parameters.
     # p(x1 )|| x1|| p(x2 )|| x2 || ... ||p( xn )||xn
     # || is string concatenation mark
@@ -121,13 +121,13 @@ module Banklink
       end
       str
     end
-    
+
     def generate_signature(service_msg_number, sigparams)
       # privkey = self.class.parent.get_private_key
-      privkey = SwedbankLv.get_private_key
+      privkey = Swedbank.get_private_key
       privkey.sign(OpenSSL::Digest::SHA1.new, generate_data_string(service_msg_number, sigparams))
     end
-    
+
     def generate_mac(service_msg_number, sigparams)
       Base64.encode64(generate_signature(service_msg_number, sigparams)).gsub(/\n/,'')
     end

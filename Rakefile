@@ -7,7 +7,7 @@ require "bundler/gem_tasks"
 desc 'Default: run unit tests.'
 task :default => :test
 
-desc 'Test the banklink_lv plugin.'
+desc 'Test the banklink plugin.'
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'

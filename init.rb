@@ -1,1 +1,1 @@
-require 'banklink_lv'
+require 'banklink'

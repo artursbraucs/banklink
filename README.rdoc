@@ -23,13 +23,13 @@ Insert this into your Gemfile
 
 Insert this in your config file:
 
-  SwedbankLv.private_key = File.read("#{Rails.root}/path/to/your_private_key")
-  SwedbankLv.bank_certificate = File.read("#{Rails.root}/path/to/bank_public_key")
-  SwedbankLv.production_url = "https://ib.swedbank.lv/banklink"
+  Swedbank.private_key = File.read("#{Rails.root}/path/to/your_private_key")
+  Swedbank.bank_certificate = File.read("#{Rails.root}/path/to/bank_public_key")
+  Swedbank.production_url = "https://ib.swedbank.lv/banklink"
 
-  SwedbankLv.test_private_key = File.read("#{Rails.root}/path/to/your_test_private_key")
-  SwedbankLv.test_bank_certificate = File.read("#{Rails.root}/path/to/test_bank_public_key")
-  SwedbankLv.test_url = "https://ib.swedbank.lv/banklink"
+  Swedbank.test_private_key = File.read("#{Rails.root}/path/to/your_test_private_key")
+  Swedbank.test_bank_certificate = File.read("#{Rails.root}/path/to/test_bank_public_key")
+  Swedbank.test_url = "https://ib.swedbank.lv/banklink"
 
 Helper for view:
 
@@ -62,7 +62,7 @@ Thats all!
 
 == Testing
 
-You can run the tests from this gem with (inside the banklink_lv directory):
+You can run the tests from this gem with (inside the banklink directory):
 
   rake
 
