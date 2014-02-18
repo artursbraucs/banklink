@@ -4,7 +4,7 @@ Payment system integration for Latvian banks what uses banklink API.
 
 == Changes in 1.0.0
 
-* No test keys and certificates avaivable.
+* No test keys and certificates options.
 * Remove Rails depedency.
 * Refactured SwedbankLv to Swedbank
 * Notification#transaction_id is comming from VK_REF. (not VK_T_NO anymore)
