@@ -4,6 +4,6 @@ class Hash
   end
 end
 
-module BanklinkLv
-  
+module Banklink
+
 end

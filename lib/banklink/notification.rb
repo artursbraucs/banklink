@@ -153,14 +153,10 @@ module Banklink
     # Take the posted data and move the relevant data into a hash
     def parse(post)
       @raw = post.to_s
-      puts "====== FROM BANK ======"
       for line in @raw.split('&')
         key, value = *line.scan( %r{^([A-Za-z0-9_.]+)\=(.*)$} ).flatten
         params[key] = CGI.unescape(value)
-
-        puts "<#{key}> #{params[key]}"
       end
-      puts "======================="
     end
   end
 end

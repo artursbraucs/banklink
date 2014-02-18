@@ -1,6 +1,5 @@
 require 'banklink/version'
 
-# require "rails"
 require "base64"
 require "active_support/dependencies"
 

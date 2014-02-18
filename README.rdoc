@@ -2,6 +2,13 @@
 
 Payment system integration for Latvian banks what uses banklink API.
 
+== Changes in 1.0.0
+
+* No test keys and certificates avaivable.
+* Remove Rails depedency.
+* Refactured SwedbankLv to Swedbank
+* Notification#transaction_id is comming from VK_REF. (not VK_T_NO anymore)
+
 == Supported banks
 
  Swedbank (Latvia)
@@ -26,10 +33,6 @@ Insert this in your config file:
   Swedbank.private_key = File.read("#{Rails.root}/path/to/your_private_key")
   Swedbank.bank_certificate = File.read("#{Rails.root}/path/to/bank_public_key")
   Swedbank.production_url = "https://ib.swedbank.lv/banklink"
-
-  Swedbank.test_private_key = File.read("#{Rails.root}/path/to/your_test_private_key")
-  Swedbank.test_bank_certificate = File.read("#{Rails.root}/path/to/test_bank_public_key")
-  Swedbank.test_url = "https://ib.swedbank.lv/banklink"
 
 Helper for view:
 
