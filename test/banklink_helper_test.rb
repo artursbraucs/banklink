@@ -13,7 +13,7 @@ class BanklinkHelperTest < Test::Unit::TestCase
     options[:reference] = '54'
     options[:message] = 'Pay for smtx'
 
-    helper = Helper.new(300, '300', options)
+    helper = Swedbank::Helper.new(300, '300', options)
     assert_equal 12, helper.form_fields.size
   end
 

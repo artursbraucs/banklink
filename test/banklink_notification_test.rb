@@ -6,7 +6,7 @@ class BanklinkNotificationTest < Test::Unit::TestCase
   include Banklink
 
   def setup
-    @swedbank = Banklink::Notification.new(http_raw_data)
+    @swedbank = Banklink::Swedbank.notification(http_raw_data)
   end
 
   # TODO: fix test
@@ -30,7 +30,7 @@ class BanklinkNotificationTest < Test::Unit::TestCase
   end
 
   def test_acknowledgement_fail_with_params_changed
-    @swedbank = Banklink::Notification.new(http_raw_data.gsub('VK_AMOUNT=33', 'VK_AMOUNT=100'))
+    @swedbank = Banklink::Swedbank.notification(http_raw_data.gsub('VK_AMOUNT=33', 'VK_AMOUNT=100'))
     assert_equal false, @swedbank.acknowledge
   end
 

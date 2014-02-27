@@ -13,7 +13,7 @@ require 'banklink'
 # default params
 PARAMS_1002 = {'VK_SERVICE' => 'foo', 'VK_VERSION' => 'bar', 'VK_SND_ID' => 'goo', 'VK_STAMP' => 'tooboo', 'VK_AMOUNT' => '10565', 'VK_CURR' => 'LVL', 'VK_REF' => 'dsa', 'VK_MSG' => 'Āžēīū'}
 
-Swedbank.private_key = <<EOF
+Banklink::Swedbank.private_key = <<EOF
 -----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQC+AROlXiRvi1T7Q9fAh0Lw73szAn26mqfKDqd6Bdplq3v+gVWC
 3v0+bgtfNakRE/UVYOxEA0z0viqRpKzPuNy8OstTMe8fFKs19NW8lBYik6NzJ4Bk
@@ -31,7 +31,7 @@ m3gFeXEBgzGn9UOd6xIAp0p7A1XVBN8XzDMa09gSOks=
 -----END RSA PRIVATE KEY-----
 EOF
 
-Swedbank.bank_certificate = <<EOF
+Banklink::Swedbank.bank_certificate = <<EOF
 -----BEGIN CERTIFICATE-----
 MIIDRTCCAq6gAwIBAgIBADANBgkqhkiG9w0BAQQFADB7MQswCQYDVQQGEwJFRTEO
 MAwGA1UECBMFSGFyanUxEDAOBgNVBAcTB1RhbGxpbm4xDDAKBgNVBAoTA0VZUDEL
@@ -54,7 +54,7 @@ C82uR/wUZJDw9kj+R1O46/byG8yA+S9FVw==
 -----END CERTIFICATE-----
 EOF
 
-Swedbank.service_url = 'https://banklink.lv'
+Banklink::Swedbank.service_url = 'https://banklink.lv'
 
 def load_schema
   config = YAML::load(IO.read(File.dirname(__FILE__) + '/database.yml'))

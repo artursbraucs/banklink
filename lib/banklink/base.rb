@@ -5,5 +5,4 @@ class Hash
 end
 
 module Banklink
-
 end
