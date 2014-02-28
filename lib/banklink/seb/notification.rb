@@ -45,7 +45,7 @@ module Banklink
       #end
 
       def get_data_string
-        generate_data_string(params['VK_SERVICE'], params, Swedbank.required_service_params)
+        generate_data_string(params['IB_SERVICE'], params, Swedbank.required_service_params)
       end
 
       def bank_signature_valid?(bank_signature, service_msg_number, sigparams)
@@ -53,67 +53,67 @@ module Banklink
       end
 
       def complete?
-        params['VK_SERVICE'] == '1101'
+        params['IB_SERVICE'] == '1101'
       end
 
       def wait?
-        params['VK_SERVICE'] == '1201'
+        params['IB_SERVICE'] == '1201'
       end
 
       def failed?
-        params['VK_SERVICE'] == '1901'
+        params['IB_SERVICE'] == '1901'
       end
 
       def currency
-        params['VK_CURR']
+        params['IB_CURR']
       end
 
       # The order id we passed to the form helper.
       def item_id
-        params['VK_STAMP']
+        params['IB_STAMP']
       end
 
       def transaction_id
-        params['VK_REF']
+        params['IB_REF']
       end
 
       def sender_name
-        params['VK_SND_NAME']
+        params['IB_SND_NAME']
       end
 
       def sender_bank_account
-        params['VK_SND_ACC']
+        params['IB_SND_ACC']
       end
 
       def reciever_name
-        params['VK_REC_NAME']
+        params['IB_REC_NAME']
       end
 
       def reciever_bank_account
-        params['VK_REC_ACC']
+        params['IB_REC_ACC']
       end
 
       # When was this payment received by the client.
       # We're expecting a dd.mm.yyyy format.
       def received_at
-        date = params['VK_T_DATE']
+        date = params['IB_T_DATE']
         return nil unless date
         day, month, year = *date.split('.').map(&:to_i)
         Date.civil(year, month, day)
       end
 
       def signature
-        Base64.decode64(params['VK_MAC'])
+        Base64.decode64(params['IB_MAC'])
       end
 
       # The money amount we received, string.
       def gross
-        params['VK_AMOUNT']
+        params['IB_AMOUNT']
       end
 
       # Was this a test transaction?
       def test?
-        params['VK_REC_ID'] == 'testvpos'
+        params['IB_REC_ID'] == 'testvpos'
       end
 
       # TODO what should be here?
@@ -124,7 +124,7 @@ module Banklink
       # If our request was sent automatically by the bank (true) or manually
       # by the user triggering the callback by pressing a "return" button (false).
       def automatic?
-        params['VK_AUTO'].upcase == 'Y'
+        params['IB_AUTO'].upcase == 'Y'
       end
 
       def success?
@@ -145,7 +145,7 @@ module Banklink
       #       ... log possible hacking attempt ...
       #     end
       def acknowledge
-        bank_signature_valid?(signature, params['VK_SERVICE'], params)
+        bank_signature_valid?(signature, params['IB_SERVICE'], params)
       end
 
     end

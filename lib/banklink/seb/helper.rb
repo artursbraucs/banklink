@@ -26,6 +26,9 @@ module Banklink #:nodoc:
 
         add_required_params
         add_ib_crc
+
+        add_lang_field
+        add_return_url_field
       end
 
 
@@ -61,7 +64,7 @@ module Banklink #:nodoc:
       end
 
       def add_required_params
-        required_params = Swedbank.required_service_params[@service_msg_number]
+        required_params = Seb.required_service_params[@service_msg_number]
         required_params.each do |param|
           param_value = (@options.delete(param) || send(param.to_s.downcase)).to_s
           add_field param, encode_to_utf8(param_value)

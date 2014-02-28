@@ -46,10 +46,7 @@ module Banklink
       'IB_CURR',
       'IB_NAME',
       'IB_PAYMENT_ID',
-      'IB_PAYMENT_DESC',
-      'IB_CRC',
-      'IB_FEEDBACK',
-      'IB_LANG'
+      'IB_PAYMENT_DESC'
       ],
     '0003' => [
       'IB_SND_ID',
@@ -65,10 +62,7 @@ module Banklink
       'IB_PAYER_NAME',
       'IB_PAYMENT_DESC',
       'IB_PAYMENT_DATE',
-      'IB_PAYMENT_TIME',
-      'IB_CRC',
-      'IB_LANG',
-      'IB_FROM_SERVER'
+      'IB_PAYMENT_TIME'
       ],
     '0004' => [
       'IB_SND_ID',
@@ -78,9 +72,7 @@ module Banklink
       'IB_PAYMENT_ID',
       'IB_PAYMENT_DESC',
       'IB_FROM_SERVER',
-      'IB_STATUS',
-      'IB_CRC',
-      'IB_LANG'
+      'IB_STATUS'
       ]
     }
 
