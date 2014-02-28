@@ -83,3 +83,4 @@ def load_schema
   ActiveRecord::Base.establish_connection(config[db_adapter])
   load(File.dirname(__FILE__) + "/schema.rb")
 end
+w
