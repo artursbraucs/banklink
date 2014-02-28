@@ -29,7 +29,8 @@ module Banklink
     # '003val1003val2006value3'
     def generate_data_string(service_msg_number, sigparams, required_service_params)
       str = ''
-      required_service_params[Integer(service_msg_number)].each do |param|
+      required_params = required_service_params[Integer(service_msg_number)] || required_service_params[service_msg_number]
+      required_params.each do |param|
         val = sigparams[param].to_s # nil goes to ''
         str << func_p(val) << val
       end

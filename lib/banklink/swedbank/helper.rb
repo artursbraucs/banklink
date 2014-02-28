@@ -100,6 +100,10 @@ module Banklink #:nodoc:
         '008'
       end
 
+      def redirect_url
+        Swedbank.service_url
+      end
+
       # Default service message number.
       # Use '1002' because it requires the least amount of parameters.
       def default_service_msg_number

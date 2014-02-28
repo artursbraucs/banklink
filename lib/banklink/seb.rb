@@ -9,7 +9,8 @@ module Banklink
     # RSA public key of the bank, taken from the X509 certificate of the bank. OpenSSL container.
     def self.get_bank_public_key
       cert = self.bank_certificate
-      OpenSSL::X509::Certificate.new(cert.gsub(/  /, '')).public_key
+      # OpenSSL::X509::Certificate.new(cert.gsub(/  /, '')).public_key
+      OpenSSL::X509::Certificate.new(cert).public_key
     end
 
     mattr_accessor :private_key

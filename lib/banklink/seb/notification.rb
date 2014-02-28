@@ -37,23 +37,8 @@ module Banklink
         production_ips.include?(ip)
       end
 
-          # A helper method to parse the raw post of the request & return
-      # the right Notification subclass based on the sender id.
-      #def self.get_notification(http_raw_data)
-      #  params = ActiveMerchant::Billing::Integrations::Notification.new(http_raw_data).params
-      #  Banklink.get_class(params)::Notification.new(http_raw_data)
-      #end
-
-      def get_data_string
-        generate_data_string(params['IB_SERVICE'], params, Swedbank.required_service_params)
-      end
-
-      def bank_signature_valid?(bank_signature, service_msg_number, sigparams)
-        Swedbank.get_bank_public_key.verify(OpenSSL::Digest::SHA1.new, bank_signature, generate_data_string(service_msg_number, sigparams, Swedbank.required_service_params))
-      end
-
       def complete?
-        params['IB_SERVICE'] == '1101'
+        params['IB_STATUS'] == 'ACCOMPLISHED'
       end
 
       def wait?
@@ -68,13 +53,8 @@ module Banklink
         params['IB_CURR']
       end
 
-      # The order id we passed to the form helper.
-      def item_id
-        params['IB_STAMP']
-      end
-
       def transaction_id
-        params['IB_REF']
+        params['IB_PAYMENT_ID']
       end
 
       def sender_name
@@ -82,11 +62,11 @@ module Banklink
       end
 
       def sender_bank_account
-        params['IB_SND_ACC']
+        params['IB_PAYER_ACC']
       end
 
       def reciever_name
-        params['IB_REC_NAME']
+        params['IB_PAYER_NAME']
       end
 
       def reciever_bank_account
@@ -103,7 +83,7 @@ module Banklink
       end
 
       def signature
-        Base64.decode64(params['IB_MAC'])
+        Base64.decode64(params['IB_CRC'])
       end
 
       # The money amount we received, string.
@@ -146,6 +126,14 @@ module Banklink
       #     end
       def acknowledge
         bank_signature_valid?(signature, params['IB_SERVICE'], params)
+      end
+
+      def get_data_string
+        generate_data_string(params['IB_SERVICE'], params, Seb.required_service_params)
+      end
+
+      def bank_signature_valid?(bank_signature, service_msg_number, sigparams)
+        Seb.get_bank_public_key.verify(OpenSSL::Digest::SHA1.new, bank_signature, generate_data_string(service_msg_number, sigparams, Seb.required_service_params))
       end
 
     end

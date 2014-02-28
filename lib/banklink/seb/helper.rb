@@ -10,11 +10,11 @@ module Banklink #:nodoc:
         @fields = {}
 
         @options['IB_SND_ID'] = account
-        @options['IB_PAYMENT_ID'] = order
+        @options['IB_PAYMENT_ID'] = transaction
         @options['IB_AMOUNT'] = options[:amount]
         @options['IB_CURR'] = options[:currency] || "EUR"
         @options['IB_FEEDBACK'] = options[:return]
-        @options['IB_NAME'] = options[:name] || ""
+        @options['IB_NAME'] = options[:name] || "Company"
         @options['IB_PAYMENT_DESC'] = options[:message]
         @options['IB_LANG'] = options[:lang] if options[:lang]
 
@@ -85,6 +85,10 @@ module Banklink #:nodoc:
 
       def ib_version
         '001'
+      end
+
+      def redirect_url
+        Seb.service_url
       end
 
       # Default service message number.
