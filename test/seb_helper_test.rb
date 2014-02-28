@@ -2,10 +2,10 @@
 
 require File.dirname(__FILE__) + '/test_helper'
 
-class BanklinkHelperTest < Test::Unit::TestCase
+class SebHelperTest < Test::Unit::TestCase
   include Banklink
 
-  def test_should_create_fields_for_1002
+  def test_should_create_fields_for_0002
     options = {}
     options[:amount] = '1.55'
     options[:currency] = 'LVL'
@@ -13,8 +13,8 @@ class BanklinkHelperTest < Test::Unit::TestCase
     options[:reference] = '54'
     options[:message] = 'Pay for smtx'
 
-    helper = Swedbank::Helper.new(300, '300', options)
-    assert_equal 12, helper.form_fields.size
+    helper = Seb::Helper.new(300, '300', options)
+    assert_equal 11, helper.form_fields.size
   end
 
 end

@@ -1,92 +1,5 @@
 module Banklink
 
-  # Detect bank module from params
-  #def self.get_class(params)
-  #  case params['VK_SND_ID']
-  #    when 'EYP' then SebEst
-  #    when 'SAMPOPANK' then SampoEst
-  #    when 'HP' then SwedbankEst
-
-    # Swedbank uses same sender id for different countries, currently can't detect Lithuanian
-    # use:
-    #   notify = Swedbank::Notification.new(params)
-    #when 'HP' then Swedbank
-
-    #when '70440' then SebLtu
-    #when 'SMPOLT22' then DanskeLtu
-    #when 'SNORLT22' then SnorasLtu
-    #when '112029720' then DnbnordLtu
-    #when '70100' then UbLtu
-
-  #    else raise(ArgumentError, "unknown sender id: #{params['VK_SND_ID']}")
-  #  end
-  #end
-
-  # Define required fields for each service message.
-  # We need to know this in order to calculate VK_MAC
-  # from a given hash of parameters.
-  # Order of the parameters is important.
-  mattr_accessor :required_service_params
-  self.required_service_params = {
-  1001 => [
-    'VK_SERVICE',
-    'VK_VERSION',
-    'VK_SND_ID',
-    'VK_STAMP',
-    'VK_AMOUNT',
-    'VK_CURR',
-    'VK_ACC',
-    'VK_NAME',
-    'VK_REF',
-    'VK_MSG'],
-  1002 => [
-    'VK_SERVICE',
-    'VK_VERSION',
-    'VK_SND_ID',
-    'VK_STAMP',
-    'VK_AMOUNT',
-    'VK_CURR',
-    'VK_REF',
-    'VK_MSG' ],
-  1101 => [
-    'VK_SERVICE',
-    'VK_VERSION',
-    'VK_SND_ID',
-    'VK_REC_ID',
-    'VK_STAMP',
-    'VK_T_NO',
-    'VK_AMOUNT',
-    'VK_CURR',
-    'VK_REC_ACC',
-    'VK_REC_NAME',
-    'VK_SND_ACC',
-    'VK_SND_NAME',
-    'VK_REF',
-    'VK_MSG',
-    'VK_T_DATE'],
-  1201 => [
-    'VK_SERVICE',
-    'VK_VERSION',
-    'VK_SND_ID',
-    'VK_REC_ID',
-    'VK_STAMP',
-    'VK_AMOUNT',
-    'VK_CURR',
-    'VK_REC_ACC',
-    'VK_REC_NAME',
-    'VK_SND_ACC',
-    'VK_SND_NAME',
-    'VK_REF',
-    'VK_MSG'],
-  1901 => [
-    'VK_SERVICE',
-    'VK_VERSION',
-    'VK_SND_ID',
-    'VK_REC_ID',
-    'VK_STAMP',
-    'VK_REF',
-    'VK_MSG']
-  }
 
   # Calculation using method VK_VERSION=008:
   # VK_MAC is RSA signature of the request fields coded into BASE64.
@@ -102,6 +15,7 @@ module Banklink
   # d is RSA secret exponent
   # n is RSA modulus
   module Common
+    extend ActiveSupport::Concern
     # p(x) is length of the field x represented by three digits
     def func_p(val)
       sprintf("%03i", val.length)
@@ -113,23 +27,37 @@ module Banklink
     # p(x) is length of the field x represented by three digits
     # Parameters val1, val2, value3 would be turned into:
     # '003val1003val2006value3'
-    def generate_data_string(service_msg_number, sigparams)
+    def generate_data_string(service_msg_number, sigparams, required_service_params)
       str = ''
-      Banklink.required_service_params[Integer(service_msg_number)].each do |param|
+      required_params = required_service_params[Integer(service_msg_number)] || required_service_params[service_msg_number]
+      required_params.each do |param|
         val = sigparams[param].to_s # nil goes to ''
         str << func_p(val) << val
       end
       str
     end
 
-    def generate_signature(service_msg_number, sigparams)
-      # privkey = self.class.parent.get_private_key
-      privkey = Swedbank.get_private_key
-      privkey.sign(OpenSSL::Digest::SHA1.new, generate_data_string(service_msg_number, sigparams))
+    def generate_signature(service_msg_number, sigparams, required_service_params)
+      privkey = self.class.parent.get_private_key
+      privkey.sign(OpenSSL::Digest::SHA1.new, generate_data_string(service_msg_number, sigparams, required_service_params))
     end
 
-    def generate_mac(service_msg_number, sigparams)
-      Base64.encode64(generate_signature(service_msg_number, sigparams)).gsub(/\n/,'')
+    def generate_mac(service_msg_number, sigparams, required_service_params)
+      Base64.encode64(generate_signature(service_msg_number, sigparams, required_service_params)).gsub(/\n/,'')
     end
+
+    def encode_to_utf8 string
+      string.encode('UTF-8', :invalid => :replace, :replace => '').encode('UTF-8')
+    end
+
+    # Take the posted data and move the relevant data into a hash
+    def parse(post)
+      @raw = post.to_s
+      for line in @raw.split('&')
+        key, value = *line.scan( %r{^([A-Za-z0-9_.]+)\=(.*)$} ).flatten
+        params[key] = CGI.unescape(value)
+      end
+    end
+
   end
 end

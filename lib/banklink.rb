@@ -2,6 +2,7 @@ require 'banklink/version'
 
 require "base64"
 require "active_support/dependencies"
+require "active_support/concern"
 
 require 'net/http'
 require 'net/https'
@@ -15,6 +16,5 @@ require 'cgi'
 
 require 'banklink/banklink'
 require 'banklink/base'
-require 'banklink/helper'
 require 'banklink/swedbank'
-require 'banklink/notification'
+require 'banklink/seb'
