@@ -58,7 +58,7 @@ module Banklink
       end
 
       def sender_name
-        params['IB_SND_NAME']
+        params['IB_PAYER_NAME']
       end
 
       def sender_bank_account
@@ -66,7 +66,7 @@ module Banklink
       end
 
       def reciever_name
-        params['IB_PAYER_NAME']
+        params['IB_REC_NAME']
       end
 
       def reciever_bank_account
