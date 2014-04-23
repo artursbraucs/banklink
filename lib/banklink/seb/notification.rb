@@ -104,7 +104,7 @@ module Banklink
       # If our request was sent automatically by the bank (true) or manually
       # by the user triggering the callback by pressing a "return" button (false).
       def automatic?
-        params['IB_FROM_SERVER'].upcase == 'Y'
+        (params['IB_FROM_SERVER'].present? && params['IB_FROM_SERVER'].upcase == 'Y')
       end
 
       def success?
