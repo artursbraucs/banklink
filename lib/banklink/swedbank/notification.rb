@@ -96,6 +96,7 @@ module Banklink
       # When was this payment received by the client.
       # We're expecting a dd.mm.yyyy format.
       def received_at
+        require 'date'
         date = params['VK_T_DATE']
         return nil unless date
         day, month, year = *date.split('.').map(&:to_i)
