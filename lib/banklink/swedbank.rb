@@ -20,9 +20,6 @@ module Banklink
     end
 
     mattr_accessor :service_url
-    def self.service_url
-      self.service_url
-    end
 
     def self.notification(post)
       Notification.new(post)
