@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "banklink_lv"
 
   s.add_development_dependency 'rake'
+  s.add_development_dependency 'minitest'
 
-  s.add_dependency "activesupport"
+  s.add_dependency 'activesupport'
 end

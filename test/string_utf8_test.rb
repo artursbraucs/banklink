@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/test_helper'
  
-class StringUTF8Test < Test::Unit::TestCase
+class StringUTF8Test < MiniTest::Unit::TestCase
   def test_utf8_string_lenght
     assert_equal 10, "Āēīūķļņčšģ".length
   end

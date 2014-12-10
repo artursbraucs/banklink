@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/test_helper'
 
-class BanklinkCommonTest < Test::Unit::TestCase
+class BanklinkCommonTest < MiniTest::Unit::TestCase
   include Banklink::Common
 
   def test_should_decide_string_lenght

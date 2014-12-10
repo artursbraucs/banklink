@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/test_helper'
 
-class BanklinkNotificationTest < Test::Unit::TestCase
+class BanklinkNotificationTest < MiniTest::Unit::TestCase
   include Banklink
 
   def setup
@@ -32,6 +32,16 @@ class BanklinkNotificationTest < Test::Unit::TestCase
   def test_acknowledgement_fail_with_params_changed
     @swedbank = Banklink::Swedbank.notification(http_raw_data.gsub('VK_AMOUNT=33', 'VK_AMOUNT=100'))
     assert_equal false, @swedbank.acknowledge
+  end
+
+  def test_receiver_name
+    assert_equal 'ALLAS ALLAR', @swedbank.receiver_name
+    assert_equal 'ALLAS ALLAR', @swedbank.reciever_name
+  end
+
+  def test_receiver_bank_account
+    assert_equal '10002050618003', @swedbank.receiver_bank_account
+    assert_equal '10002050618003', @swedbank.reciever_bank_account
   end
 
   private

@@ -65,13 +65,15 @@ module Banklink
         params['IB_PAYER_ACC']
       end
 
-      def reciever_name
+      def receiver_name
         params['IB_REC_NAME']
       end
+      alias_method :reciever_name, :receiver_name
 
-      def reciever_bank_account
+      def receiver_bank_account
         params['IB_REC_ACC']
       end
+      alias_method :reciever_bank_account, :receiver_bank_account
 
       # When was this payment received by the client.
       # We're expecting a dd.mm.yyyy format.

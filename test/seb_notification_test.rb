@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/test_helper'
 
-class SebNotificationTest < Test::Unit::TestCase
+class SebNotificationTest < MiniTest::Unit::TestCase
   include Banklink
 
   def setup
@@ -26,9 +26,19 @@ class SebNotificationTest < Test::Unit::TestCase
     assert_equal false, @seb.acknowledge
   end
 
+  def test_receiver_name
+    assert_equal 'foo', @seb.receiver_name
+    assert_equal 'foo', @seb.reciever_name
+  end
+
+  def test_receiver_bank_account
+    assert_equal '123', @seb.receiver_bank_account
+    assert_equal '123', @seb.reciever_bank_account
+  end
+
   private
 
   def http_raw_data
-    "IB_SND_ID=SEBUB&IB_SERVICE=0004&IB_VERSION=001&IB_REC_ID=NOMO&IB_PAYMENT_ID=92&IB_PAYMENT_DESC=test&IB_FROM_SERVER=N&IB_STATUS=ACCOMPLISHED&IB_CRC=BJIjQ7j0T+UG6ju/kybOFhf9ZMg0YG/G2aGN6k8X4sl7seEtF9JlxF0EwMvqv4ycYLbtTsbb1f7s2unT6mV2RPJzg+SNDpvKLeZ75NT0eZtO3+pspcVun9K/W/t8Q1HTRcCBZTOQgCo3HdraUds3fNyuyxLSx51UjmOvYlVVHaM=&IB_LANG=LAT"
+    "IB_SND_ID=SEBUB&IB_SERVICE=0004&IB_VERSION=001&IB_REC_ID=NOMO&IB_PAYMENT_ID=92&IB_PAYMENT_DESC=test&IB_FROM_SERVER=N&IB_STATUS=ACCOMPLISHED&IB_CRC=BJIjQ7j0T+UG6ju/kybOFhf9ZMg0YG/G2aGN6k8X4sl7seEtF9JlxF0EwMvqv4ycYLbtTsbb1f7s2unT6mV2RPJzg+SNDpvKLeZ75NT0eZtO3+pspcVun9K/W/t8Q1HTRcCBZTOQgCo3HdraUds3fNyuyxLSx51UjmOvYlVVHaM=&IB_LANG=LAT&IB_REC_NAME=foo&IB_REC_ACC=123"
   end
 end
